@@ -24,9 +24,6 @@ const Index = () => {
   const bubbleTimerRef = useRef<number | null>(null);
   const cooldownRef = useRef(0);
 
-  // 没基线 → 引导
-  if (!baseline) return <Navigate to="/onboarding" replace />;
-
   const showBubble = (text: string, ms = 6000, opts: { loading?: boolean } = {}) => {
     if (bubbleTimerRef.current) clearTimeout(bubbleTimerRef.current);
     setBubble({ text, loading: opts.loading });
@@ -82,6 +79,9 @@ const Index = () => {
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Math.floor(state.current * 2)]);
+
+  // 没基线 → 引导(放在所有 hook 之后)
+  if (!baseline) return <Navigate to="/onboarding" replace />;
 
   const adjust = (delta: number, source: "quick" | "longpress") => {
     update(delta, source);
