@@ -174,5 +174,4 @@ All colors MUST be HSL.
   .animate-float { animation: float-y 3.5s ease-in-out infinite; }
   .animate-wobble { animation: wobble 600ms var(--ease-bounce); }
   .animate-bubble-in { animation: bubble-in 280ms var(--ease-bounce); }
-  }
 }
