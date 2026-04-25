@@ -8,35 +8,58 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* 小鱼干 — 奶油暖橙系 */
+    --background: 40 38% 96%;          /* #F8F4EC 米白 */
+    --foreground: 25 18% 22%;          /* 深暖灰 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 50% 99%;
+    --card-foreground: 25 18% 22%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 50% 99%;
+    --popover-foreground: 25 18% 22%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* 主交互色 = 蜜桃粉橙 */
+    --primary: 18 88% 68%;             /* 暖橙 #F49072 */
+    --primary-foreground: 40 50% 99%;
+    --primary-soft: 14 100% 92%;       /* 淡粉 #FFE4DA */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 32 100% 90%;          /* 浅橙 #FFE4CC */
+    --secondary-foreground: 25 30% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 38 30% 92%;
+    --muted-foreground: 28 12% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 48 100% 88%;             /* 奶黄 #FFF4CC */
+    --accent-foreground: 25 30% 25%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --mint: 162 45% 80%;               /* 充能薄荷 #D4F0E8 */
+    --mint-foreground: 168 35% 28%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --fish: 28 95% 62%;                /* 小鱼干主色 */
+    --fish-glow: 32 100% 80%;
 
-    --radius: 0.5rem;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 40 50% 99%;
+
+    --border: 30 25% 88%;
+    --input: 30 25% 88%;
+    --ring: 18 88% 68%;
+
+    --radius: 1.25rem;
+
+    /* 渐变 */
+    --gradient-warm: linear-gradient(160deg, hsl(40 80% 96%) 0%, hsl(28 90% 92%) 60%, hsl(14 100% 92%) 100%);
+    --gradient-fish: radial-gradient(circle at 30% 30%, hsl(var(--fish-glow)), hsl(var(--fish)));
+    --gradient-card: linear-gradient(180deg, hsl(40 60% 99%) 0%, hsl(32 80% 96%) 100%);
+
+    /* 阴影 */
+    --shadow-soft: 0 8px 24px -8px hsl(18 60% 60% / 0.18);
+    --shadow-pillow: 0 4px 0 0 hsl(18 60% 70% / 0.25), 0 12px 32px -10px hsl(18 60% 50% / 0.25);
+    --shadow-cat: 0 20px 50px -20px hsl(18 80% 50% / 0.35);
+
+    /* 过渡 */
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +124,55 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Quicksand', 'Nunito', -apple-system, 'PingFang SC', 'Microsoft Yahei', sans-serif;
+    background-image: var(--gradient-warm);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-family: 'Fredoka', 'Quicksand', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .bg-gradient-warm { background-image: var(--gradient-warm); }
+  .bg-gradient-card { background-image: var(--gradient-card); }
+  .shadow-pillow { box-shadow: var(--shadow-pillow); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-cat { box-shadow: var(--shadow-cat); }
+
+  /* 鱼干飞入 */
+  @keyframes fish-pop-in {
+    0% { transform: scale(0) rotate(-40deg); opacity: 0; }
+    60% { transform: scale(1.15) rotate(8deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+  @keyframes fish-pop-out {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.4) translateY(-12px); opacity: 0; }
+  }
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+  }
+  @keyframes bubble-in {
+    0% { transform: scale(0.7) translateY(8px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .animate-fish-in { animation: fish-pop-in 420ms var(--ease-bounce); }
+  .animate-fish-out { animation: fish-pop-out 320ms var(--ease-smooth) forwards; }
+  .animate-float { animation: float-y 3.5s ease-in-out infinite; }
+  .animate-wobble { animation: wobble 600ms var(--ease-bounce); }
+  .animate-bubble-in { animation: bubble-in 280ms var(--ease-bounce); }
   }
 }
