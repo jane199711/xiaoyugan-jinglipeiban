@@ -6,6 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Onboarding from "./pages/onboarding/Onboarding.tsx";
+import EventRecord from "./pages/EventRecord.tsx";
+import Charge from "./pages/Charge.tsx";
+import Hollow from "./pages/Hollow.tsx";
+import Report from "./pages/Report.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +22,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/event/:type" element={<EventRecord />} />
+          <Route path="/charge" element={<Charge />} />
+          <Route path="/hollow" element={<Hollow />} />
+          <Route path="/report" element={<Report />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

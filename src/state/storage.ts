@@ -40,4 +40,9 @@ export const KEYS = {
   dailyStatus: (date: string) => `xyg_daily_status_${date}`,
   insightShown: (date: string) => `xyg_insight_${date}`,
   onboardingProgress: "xyg_onboarding_progress",
+  blindBox: (date: string) => `xyg_blindbox_${date}`,
+  chargeSessions: (date: string) => `xyg_charge_${date}`,
+  dailyReport: (date: string) => `xyg_report_${date}`,
+  hollowChat: "xyg_hollow_chat",
+  achievements: "xyg_achievements",
 };
