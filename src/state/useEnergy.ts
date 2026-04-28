@@ -81,30 +81,33 @@ export function useEnergyToday(baseline: UserBaseline | null) {
   const update = useCallback(
     (delta: number, source: EventSource = "quick", record?: { category: string; detail?: string }) => {
       try { assertValidDelta(delta); } catch (e) { console.error(e); return null; }
-      setState(prev => {
-        const next = clamp(prev.current + delta, 0, 10);
-        if (next === prev.current) return prev;
+      const latest = loadStateForToday(baseline);
+      const next = clamp(latest.current + delta, 0, 10);
+      if (next === latest.current) {
+        setState(latest);
+        return null;
+      }
         const change_type: EventChangeType = delta > 0 ? "add" : "subtract";
         const rec: EnergyRecord = {
           id: uid(),
           timestamp: new Date().toISOString(),
           energy_score: next,
-          previous_score: prev.current,
+        previous_score: latest.current,
           score_change: delta,
           event_category: record?.category ?? null,
           event_detail: record?.detail ?? null,
           change_type,
           source,
         };
-        const nextRecords = [rec, ...prev.records].slice(0, 200);
-        setItem(KEYS.energyCurrent(prev.date), next);
-        setItem(KEYS.records(prev.date), nextRecords);
-        return { ...prev, current: next, records: nextRecords };
-      });
+      const nextRecords = [rec, ...latest.records].slice(0, 200);
+      const nextState = { ...latest, current: next, records: nextRecords };
+      setItem(KEYS.energyCurrent(latest.date), next);
+      setItem(KEYS.records(latest.date), nextRecords);
+      setState(nextState);
       broadcast();
       return delta;
     },
-    []
+    [baseline]
   );
 
   return { state, update };
