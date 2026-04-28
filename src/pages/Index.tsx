@@ -147,22 +147,20 @@ const Index = () => {
           type="subtract"
           disabled={state.current <= 0}
           onSingle={() => adjust(-0.5, "quick")}
-          onLongPressTick={() => adjust(-0.5, "longpress")}
-          onDouble={() => navigate("/event/subtract")}
+          onLongPress={() => navigate("/event/subtract")}
         />
         <FishCircle energy={state.current} size={280} onCatClick={onCatClick} />
         <EnergyButton
           type="add"
           disabled={state.current >= 10}
           onSingle={() => adjust(0.5, "quick")}
-          onLongPressTick={() => adjust(0.5, "longpress")}
-          onDouble={() => navigate("/event/add")}
+          onLongPress={() => navigate("/event/add")}
         />
       </section>
 
       {/* 提示 */}
       <p className="mt-6 text-xs text-muted-foreground text-center max-w-xs leading-relaxed">
-        单击 ±0.5 · 长按连续调整 · 双击进入事件记录<br />
+        单击 ±0.5 · 长按进入事件记录<br />
         点小猫咪和我聊聊,精力 ≤ 5 时可抽盲盒回血~
       </p>
 
